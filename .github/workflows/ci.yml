@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Prepare environment
-        shell: pwsh
+        shell: powershell
         env:
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: |
@@ -34,7 +34,7 @@ jobs:
             Set-Content artifacts/environment-report.txt
 
       - name: Start Docker Compose
-        shell: pwsh
+        shell: powershell
         run: |
           $ErrorActionPreference = "Stop"
           docker compose down --volumes --remove-orphans
@@ -44,7 +44,7 @@ jobs:
           }
 
       - name: Wait and test application
-        shell: pwsh
+        shell: powershell
         run: |
           $ErrorActionPreference = "Stop"
           $health = $null
@@ -92,7 +92,7 @@ jobs:
 
       - name: Save Docker logs
         if: always()
-        shell: pwsh
+        shell: powershell
         run: |
           docker compose ps -a |
             Out-File artifacts/compose-status.txt
