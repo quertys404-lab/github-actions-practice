@@ -15,14 +15,16 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Prepare environment
-        shell: powershell -ExecutionPolicy Bypass
+        shell: powershell
         env:
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: |
           $ErrorActionPreference = "Stop"
+
           if ([string]::IsNullOrWhiteSpace($env:DB_PASSWORD)) {
             throw "DB_PASSWORD secret is missing"
           }
+
           @(
             "DB_NAME=myapp"
             "DB_USER=app_user"
@@ -30,6 +32,7 @@ jobs:
           ) | Set-Content -Path .env -Encoding ascii
 
           New-Item -ItemType Directory -Force artifacts | Out-Null
+
           "Environment prepared. Secret value is not included." |
             Set-Content artifacts/environment-report.txt
 
