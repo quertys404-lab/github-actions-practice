@@ -70,7 +70,7 @@ jobs:
 
           $api = Invoke-RestMethod http://localhost:3000/api/data
 
-          $dbCount = docker exec github-actions-db psql -U app_user -d myapp -tAc "SELECT COUNT(*) FROM items;"
+          $dbCount = docker compose exec -T db psql -U app_user -d myapp -tAc "SELECT COUNT(*) FROM items;"
           if ($LASTEXITCODE -ne 0) {
             throw "Database query failed"
           }
