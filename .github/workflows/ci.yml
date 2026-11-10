@@ -94,8 +94,11 @@ jobs:
         if: always()
         shell: powershell
         run: |
+          New-Item -ItemType Directory -Force -Path artifacts | Out-Null
+
           docker compose ps -a |
             Out-File artifacts/compose-status.txt
+
           docker compose logs --no-color |
             Out-File artifacts/docker-logs.txt
 
